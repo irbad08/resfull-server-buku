@@ -6,9 +6,9 @@ Public rest server sederhana
 *******************
 Documentation
 *******************
-get data = http://localhost/resfull-server-buku/book
-get data by id = http://localhost/resfull-server-buku/book?id=masukan_No_id
-get data by tahun terbit = http://localhost/resfull-server-buku/book?tahun=masukan_tahun
+- get data = http://localhost/resfull-server-buku/book
+- get data by id = http://localhost/resfull-server-buku/book?id=masukan_No_id
+- get data by tahun terbit = http://localhost/resfull-server-buku/book?tahun=masukan_tahun
 
 *******************
 Input
