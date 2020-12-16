@@ -5,12 +5,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class Book_model extends CI_Model
 {
 
-    public function get($id = null, $limit = 5, $offset = 0)
+    public function get($id = null, $tahun = null, $limit = 5, $offset = 0)
     {
-        if ($id === null) {
+        if ($id === null & $tahun == null) {
             return $this->db->get('tb_buku', $limit, $offset)->result();
-        } else {
+        } else if ($id === null) {
+            return $this->db->get_where('tb_buku', ['tahun_terbit' => $tahun])->result_array();
+            # code...
+        }else{
             return $this->db->get_where('tb_buku', ['id' => $id])->result_array();
+            # code...
         }
     }
     public function count()
@@ -28,7 +32,7 @@ class Book_model extends CI_Model
             }
             return ['status' => true, 'data' => $this->db->affected_rows()];
         } catch (Exception $ex) {
-            return ['status' => false, 'msg' => $ex->getMessage()];
+            return ['status' => false, 'message' => $ex->getMessage()];
         }
     }
 
@@ -43,7 +47,7 @@ class Book_model extends CI_Model
             }
             return ['status' => true, 'data' => $this->db->affected_rows()];
         } catch (Exception $ex) {
-            return ['status' => false, 'msg' => $ex->getMessage()];
+            return ['status' => false, 'message' => $ex->getMessage()];
         }
     }
 
@@ -58,7 +62,7 @@ class Book_model extends CI_Model
             }
             return ['status' => true, 'data' => $this->db->affected_rows()];
         } catch (Exception $ex) {
-            return ['status' => false, 'msg' => $ex->getMessage()];
+            return ['status' => false, 'message' => $ex->getMessage()];
         }
     }
 }

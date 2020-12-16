@@ -17,13 +17,14 @@ class Book extends RestController
     public function index_get()
     {
         $id = $this->get('id', true);
-        if ($id === null) {
+        $tahun = $this->get('tahun', true);
+        if ($id === null & $tahun == null) {
             $p = $this->get('page', true);
             $p = (empty($p) ? 1 : $p);
             $total_data = $this->book->count();
             $total_page = ceil($total_data / 10);
             $start = ($p - 1) * 10;
-            $list = $this->book->get(null, 10, $start);
+            $list = $this->book->get(null, null, 10, $start);
             if ($list) {
                 $data = [
                     'status' => true,
@@ -40,7 +41,7 @@ class Book extends RestController
             }
             $this->response($data, RestController::HTTP_OK);
         } else {
-            $data = $this->book->get($id);
+            $data = $this->book->get($id,$tahun);
             if ($data) {
                 $this->response(['status' => true, 'data' => $data], RestController::HTTP_OK);
             } else {
