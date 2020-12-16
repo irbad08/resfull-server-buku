@@ -45,7 +45,7 @@ class Book extends RestController
             if ($data) {
                 $this->response(['status' => true, 'data' => $data], RestController::HTTP_OK);
             } else {
-                $this->response(['status' => false, 'message' => $id . ' tidak ditemukan'], RestController::HTTP_NOT_FOUND);
+                $this->response(['status' => false, 'message' => ' tidak ditemukan'], RestController::HTTP_NOT_FOUND);
             }
         }
     }
