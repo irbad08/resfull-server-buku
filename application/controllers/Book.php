@@ -20,28 +20,40 @@ class Book extends RestController
         $tahun = $this->get('tahun', true);
         if ($id === null & $tahun == null) {
             $p = $this->get('page', true);
-            $p = (empty($p) ? 1 : $p);
+            $list = $this->book->get(null, null, null,null);
             $total_data = $this->book->count();
-            $total_page = ceil($total_data / 10);
-            $start = ($p - 1) * 10;
-            $list = $this->book->get(null, null, 10, $start);
-            if ($list) {
+            if ($p === null) {
                 $data = [
                     'status' => true,
                     'page' => $p,
                     'total_data' => $total_data,
-                    'total_page' => $total_page,
                     'data' => $list
                 ];
+                $this->response($data, RestController::HTTP_OK);
             } else {
-                $data = [
-                    'status' => false,
-                    'message' => 'Data tidak ditemukan'
-                ];
+                $p = (empty($p) ? 1 : $p);
+                $total_data = $this->book->count();
+                $total_page = ceil($total_data / 10);
+                $start = ($p - 1) * 10;
+                $list = $this->book->get(null, null, 10, $start);
+                if ($list) {
+                    $data = [
+                        'status' => true,
+                        'page' => $p,
+                        'total_data' => $total_data,
+                        'total_page' => $total_page,
+                        'data' => $list
+                    ];
+                } else {
+                    $data = [
+                        'status' => false,
+                        'message' => 'Data tidak ditemukan'
+                    ];
+                }
+                $this->response($data, RestController::HTTP_OK);
             }
-            $this->response($data, RestController::HTTP_OK);
         } else {
-            $data = $this->book->get($id,$tahun);
+            $data = $this->book->get($id, $tahun);
             if ($data) {
                 $this->response(['status' => true, 'data' => $data], RestController::HTTP_OK);
             } else {
